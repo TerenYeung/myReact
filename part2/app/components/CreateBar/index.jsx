@@ -2,9 +2,11 @@ import './style.scss';
 
 import React from 'react';
 
-function CreateBar() {
+function CreateBar({
+	onClick
+}) {
 	return (
-		<a href="#" className= "create-bar-component list-group-item">
+		<a href="#" onClick={ onClick } className= "create-bar-component list-group-item">
 				+ 创建新的文章	
 		</a>
 	);

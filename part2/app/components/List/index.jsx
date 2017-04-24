@@ -6,14 +6,20 @@ import React, {
 import ListItem from '../ListItem';
 
 const propTypes = {
-	items: PropTypes.array.isRequired
+	items: PropTypes.array.isRequired,
+	onSelect: PropTypes.func.isRequired,
 };
 
 function List({
-	items
+	items,
+	onSelect,
 }) {
 	const itemsContent = items.map(item => (
-		<ListItem item={item} key={item.id} />
+		<ListItem
+			item={item}
+			key={item.id}
+			onClick={() => onSelect(item.id)}
+			/>
 	))
 
 	return (

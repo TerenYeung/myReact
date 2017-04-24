@@ -6,7 +6,7 @@ import ItemEditor from '../ItemEditor';
 import ItemShowLayer from '../ItemShowLayer';
 
 import './style.scss';
-
+import uuid from 'uuid';
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -23,19 +23,35 @@ class App extends React.Component {
 			time: 143,
 		}]
 
+		this.createItem = this.createItem.bind(this);
+		this.selectItem = this.selectItem.bind(this);
 		this.state = {
 			items: [
 				...test
 			],
-			selectId: null,
+			selectedId: null,
 			editing: false,
 		};
+	}
+
+	createItem() {
+		this.setState({
+			selectedId: null,
+			editing: true,
+		})
+	}
+
+	selectItem(id) {
+		this.setState({
+			selectedId: id,
+			editing: false,
+		})
 	}
 
 	render() {
 		const {
 			items,
-			selectId,
+			selectedId,
 			editing,
 		} = this.state;
 
@@ -53,8 +69,11 @@ class App extends React.Component {
 				<div className="container">
 					<div className="row">
 						<div className="col-md-4 list-group">
-							<CreateBar />
-							<List items={this.state.items}/>
+							<CreateBar onClick={this.createItem}/>
+							<List
+								items={this.state.items}
+								onSelect={this.selectItem}
+								/>
 						</div>
 						{mainPart}				
 					</div>
