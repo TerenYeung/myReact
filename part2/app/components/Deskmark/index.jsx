@@ -2,8 +2,8 @@ import React from 'react';
 
 import CreateBar from '../CreateBar';
 import List from '../List';
-// import ItemEditor from '../ItemEditor';
-// import ItemShowLayer from '../ItemShowLayer';
+import ItemEditor from '../ItemEditor';
+import ItemShowLayer from '../ItemShowLayer';
 
 import './style.scss';
 
@@ -33,6 +33,18 @@ class App extends React.Component {
 	}
 
 	render() {
+		const {
+			items,
+			selectId,
+			editing,
+		} = this.state;
+
+		const mainPart = editing ? (
+			<ItemEditor item={items[0]} />
+		) : (
+			<ItemShowLayer item={items[0]} />
+		);
+
 		return (
 			<section className="deskmark-component">
 				<nav className="navbar navbar-fixed-top navbar-dark bg-inverse">
@@ -44,8 +56,9 @@ class App extends React.Component {
 							<CreateBar />
 							<List items={this.state.items}/>
 						</div>
-							
+						{mainPart}				
 					</div>
+					
 				</div>
 			</section>
 		)
