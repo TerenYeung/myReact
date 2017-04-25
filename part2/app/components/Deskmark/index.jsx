@@ -7,6 +7,8 @@ import ItemShowLayer from '../ItemShowLayer';
 
 import './style.scss';
 import uuid from 'uuid';
+import moment from 'moment';
+
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -25,6 +27,11 @@ class App extends React.Component {
 
 		this.createItem = this.createItem.bind(this);
 		this.selectItem = this.selectItem.bind(this);
+		this.saveItem = this.saveItem.bind(this);
+		this.cancelEdit = this.cancelEdit.bind(this);
+		this.editItem = this.editItem.bind(this);
+		this.deleteItem = this.deleteItem.bind(this);
+
 		this.state = {
 			items: [
 				...test
@@ -48,6 +55,59 @@ class App extends React.Component {
 		})
 	}
 
+	saveItem(item) {
+		let items = this.state.items;
+
+		if (!item.id) {
+			items = [
+				...items, {
+					...item,
+					id: uuid.v4(),
+					time: moment().format("MMMM Do YYYY, h:mm:ss a"),
+				}
+			]
+		} else {
+			items = items.map(
+				exist => (
+					exist.id === item.id ? {
+						...exist,
+						...item,
+					} : exist
+				)
+			);
+		}
+		this.setState({
+			items,
+			selectedId: item.id,
+			editing: false,
+		})
+	}
+
+	cancelEdit() {
+		this.setState({
+			editing: false,
+		})
+	}
+
+	editItem(id) {
+		this.setState({
+			selectedId: id,
+			editing: true
+		})
+	}
+
+	deleteItem(id) {
+		if (!id) {
+			return;
+		}
+
+		this.setState({
+			items: this.state.items.filter(
+				result => result.id != id
+			),
+		})
+	}
+
 	render() {
 		const {
 			items,
@@ -55,10 +115,20 @@ class App extends React.Component {
 			editing,
 		} = this.state;
 
+		const selected = selectedId && items.find(item => item.id == selectedId);
+
 		const mainPart = editing ? (
-			<ItemEditor item={items[0]} />
+			<ItemEditor
+				item={selected}
+				onSave={this.saveItem}
+				onCancel={this.cancelEdit}
+				/>
 		) : (
-			<ItemShowLayer item={items[0]} />
+			<ItemShowLayer
+				item={selected}
+				onEdit={this.editItem}
+				onDelete={this.deleteItem}
+				/>
 		);
 
 		return (
