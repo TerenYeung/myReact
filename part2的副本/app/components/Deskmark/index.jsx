@@ -1,4 +1,5 @@
 import './style.scss';
+import uuid from 'uuid';
 
 import React from 'react';
 
@@ -14,20 +15,107 @@ class Deskmark extends React.Component {
 
 		let items = [{
 			title: 'hello world',
+			content: 'hello world',
 			id: 1
 		}, {
 			title: 'hello react',
+			content: 'hello react',
 			id: 2
 		}]
 
 		this.state = {
 			items: [
 				...items
-			]
+			],
+			selectedId: null,
+			editing: false,
 		}
+
+		this.selectItem = this.selectItem.bind(this);
+		this.editItem = this.editItem.bind(this);
+		this.deleteItem = this.deleteItem.bind(this);
+		this.saveItem = this.saveItem.bind(this);
+		this.cancelEdit = this.cancelEdit.bind(this);
+
+	}
+
+	selectItem(id) {
+		this.setState({
+			selectedId: id,
+			editing: false
+		})
+	}
+
+	editItem(id) {
+		this.setState({
+			selectedId: id,
+			editing: true,
+		})
+	}
+
+	deleteItem(id) {
+		if (!id) return;
+		this.setState({
+			items: this.state.items.filter((item) => {
+				return item.id != id;
+			})
+		})
+	}
+
+	saveItem(item) {
+		let items = this.state.items;
+
+		if (!item.id) {
+			items = [
+				...items, {
+					id: uuid.v4(),
+				}
+			]
+		} else {
+			items.map(
+				exist => (
+					exist.id == item.id ? {
+						...exist,
+						...item,
+					} : exist
+				)
+			);
+		}
+
+		this.setState({
+			items,
+			selectedId: item.id,
+			editing: false,
+		})
+	}
+
+	cancelEdit() {
+		this.setState({
+			editing: false,
+		})
 	}
 
 	render() {
+
+		const selected = this.state.items.find((item) => {
+			return item.id === this.state.selectedId;
+		});
+
+		const editing = this.state.editing;
+
+		const mainPart = editing ? (
+			<ItemEditor
+				item={selected}
+				onSave={this.saveItem}
+				onCancel={this.cancelEdit}
+			/>) : (
+			<ItemShowLayer
+				item={selected}
+				onEdit={this.editItem}
+				onDelete={this.deleteItem}
+			/>
+		)
+
 		return (
 			<section className="deskmark-component">
 				<nav className="navbar navbar-fixed-top navbar-dark bg-inverse">
@@ -39,9 +127,12 @@ class Deskmark extends React.Component {
 					<div className="row">
 						<div className="col-md-4 list-group">
 							<CreateBar />
-							<List items={this.state.items}/>
+							<List
+								items={this.state.items}
+								onSelect={this.selectItem}
+							/>
 						</div>
-						<ItemEditor />
+					{mainPart}
 					</div>
 				</div>
 			</section>

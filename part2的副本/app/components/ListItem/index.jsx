@@ -1,17 +1,28 @@
 import './style.scss';
 
-import React from 'react';
+import React, {
+	PropTypes
+} from 'react';
 
 function ListItem({
-	item
+	item,
+	onClick,
 }) {
 	return (
-		<li className="list-item-component list-group-item">
-			<a href="#">
+		<li className="list-item-component list-group-item" >
+			<a href="#"
+				onClick={onClick}
+			>
 				<span>{item.title}</span>
+				<span>{item.formTime}</span>
 			</a>
 		</li>
 	);
+}
+
+ListItem.propTypes = {
+	item: PropTypes.object.isRequired,
+	onClick: PropTypes.func.isRequired,
 }
 
 export default ListItem;
