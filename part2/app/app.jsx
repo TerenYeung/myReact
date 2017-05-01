@@ -1,16 +1,12 @@
+import 'babel-polyfill';
+import 'bootstrap/scss/bootstrap.scss';
+
 import React from 'react';
 import {
 	render
 } from 'react-dom';
-import Profile from './Profile';
-
-const props = {
-	name: 'teren',
-	age: 18
-};
+import Deskmark from 'components/Deskmark';
 
 const app = document.createElement('div');
 document.body.appendChild(app);
-
-
-render(<Profile {...props} />, app);
+render(<Deskmark />, app);

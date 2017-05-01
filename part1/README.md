@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ### Profile-demo 目的
+=======
+### demo目的
+>>>>>>> feature/part2-practice-demo
 
 通过开发Profile页了解
 

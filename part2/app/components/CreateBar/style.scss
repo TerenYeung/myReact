@@ -1,0 +1,9 @@
+$CB_bg: #0275d8;
+.create-bar-component {
+    background: $CB_bg;
+    color: #fff;
+    &:hover {
+        background: darken($CB_bg, 20%);
+        color: #fff;
+    }
+}
