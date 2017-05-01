@@ -1,4 +1,5 @@
 import './style.scss';
+import marked from 'marked';
 
 import React, {
 	PropTypes
@@ -18,7 +19,7 @@ function ItemShowLayer({
 		)
 	}
 
-	// const item = item;
+	const content = marked(item.content);
 
 	return (
 		<div className="item-show-layer-component col-md-8">
@@ -28,9 +29,10 @@ function ItemShowLayer({
 			</div>
 			<h2>{item.title}</h2>
 			<div className="item-text">
-				{item.content}
-			</div>
-		</div>
+				<div dangerouslySetInnerHTML={{
+					__html: content
+				}}></div>
+			</div> < /div>
 	);
 }
 

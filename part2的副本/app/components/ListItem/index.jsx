@@ -14,7 +14,7 @@ function ListItem({
 				onClick={onClick}
 			>
 				<span>{item.title}</span>
-				<span>{item.formTime}</span>
+				<span>{item.time}</span>
 			</a>
 		</li>
 	);

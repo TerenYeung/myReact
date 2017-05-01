@@ -1,5 +1,6 @@
 import './style.scss';
 import uuid from 'uuid';
+import moment from 'moment';
 
 import React from 'react';
 
@@ -31,12 +32,20 @@ class Deskmark extends React.Component {
 			editing: false,
 		}
 
+		this.createItem = this.createItem.bind(this);
 		this.selectItem = this.selectItem.bind(this);
 		this.editItem = this.editItem.bind(this);
 		this.deleteItem = this.deleteItem.bind(this);
 		this.saveItem = this.saveItem.bind(this);
 		this.cancelEdit = this.cancelEdit.bind(this);
 
+	}
+
+	createItem() {
+		this.setState({
+			selectedId: null,
+			editing: true,
+		})
 	}
 
 	selectItem(id) {
@@ -68,11 +77,13 @@ class Deskmark extends React.Component {
 		if (!item.id) {
 			items = [
 				...items, {
+					...item,
 					id: uuid.v4(),
+					time: moment().format("MMMM Do YYYY, h:mm:ss a"),
 				}
 			]
 		} else {
-			items.map(
+			items = items.map(
 				exist => (
 					exist.id == item.id ? {
 						...exist,
@@ -126,7 +137,7 @@ class Deskmark extends React.Component {
 				<div className="container">
 					<div className="row">
 						<div className="col-md-4 list-group">
-							<CreateBar />
+							<CreateBar onClick={this.createItem}/>
 							<List
 								items={this.state.items}
 								onSelect={this.selectItem}
