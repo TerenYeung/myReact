@@ -34,3 +34,24 @@ state变化导致视图重绘
 Flux通过EventEmitter提供的接口，在store发生action的回调函数发送自定义事件，view层通过监听自定义事件获取当前视图的最新state而更新视图
 
 Redux通过store.getState方法获取最新的state,然后结合框架，如React进行动态更新视图；
+
+### 整体概念
+
+- store
+
+```
+store.dispatch(action)
+// 通过reducer将action和state的操作连接，计算出新state
+
+store.subscribe(func)
+// 当action导致state发生变化时，触发回调
+
+store.getState()
+//获取当前最新的state
+
+```
+
+```
+import 
+
+```
