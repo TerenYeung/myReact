@@ -1,4 +1,4 @@
-import 'bootstrap/scss/bootstrap/scss';
+import 'bootstrap/scss/bootstrap.scss';
 
 // react UI-Library
 import React from 'react';
@@ -15,7 +15,7 @@ import {
 // const store = createStore(rootReducer)
 // const store = applyMiddleware(thunkMiddleware,logger)(creatStore)(rootReducer);
 import {
-	bindActionCreations,
+	bindActionCreators,
 	createStore,
 	applyMiddleware
 } from 'redux';
@@ -46,7 +46,7 @@ const App = connect(
 		state
 	}),
 	dispatch => ({
-		actions: bindActionCreations(actionCreators, dispatch),
+		actions: bindActionCreators(actionCreators, dispatch),
 	})
 )(Deskmark);
 

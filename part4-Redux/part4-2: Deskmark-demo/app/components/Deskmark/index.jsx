@@ -1,3 +1,4 @@
+import './style.scss';
 import React from 'react';
 import CreateBar from 'components/CreateBar';
 import List from 'components/List';
@@ -5,10 +6,10 @@ import ItemShowLayer from 'components/ItemShowLayer';
 import ItemEditor from 'components/ItemEditor';
 
 class Deskmark extends React.Component {
-	componentDidMount() {
+  componentDidMount() {
 		// 组件创建之初从localStorage获取数据
 		// localStorage => dispatch(action) => reducer => getState
-		this.props.actions.fetchEntryList();
+    this.props.actions.fetchEntryList();
 	}
 
 	render() {
@@ -17,19 +18,22 @@ class Deskmark extends React.Component {
 			state,
 			actions
 		} = this.props;
+
 		const {
 			isEditing,
 			selectedId
 		} = state.editor;
+
 		const items = state.items;
+
 		const item = items.find(
 			({
 				id
-			}) => id === !selectedId);
+			}) => id === selectedId);
 
 		const mainPart = isEditing ? ( < ItemEditor item = {
 				item
-			},
+			}
 			onSave = {
 				actions.saveEntry
 			}
@@ -39,7 +43,7 @@ class Deskmark extends React.Component {
 			/>
 		) : ( < ItemShowLayer item = {
 				item
-			},
+			}
 			onEdit = {
 				actions.editEntry
 			}
@@ -71,6 +75,6 @@ class Deskmark extends React.Component {
 				</section>
 		);
 	}
-
-	export default Deskmark;
 }
+
+export default Deskmark

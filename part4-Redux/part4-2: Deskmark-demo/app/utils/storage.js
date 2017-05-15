@@ -7,7 +7,7 @@ export function getAll() {
     return new Promise(resolve => {
         const results = STORAGE.getItem(STORAGE_KEY);
 
-        reoslve(results ? JSON.parse(results) : [])
+        resolve(results ? JSON.parse(results) : [])
     })
 }
 

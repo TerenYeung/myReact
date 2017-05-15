@@ -84,3 +84,10 @@ export function saveEntry(item) {
         }
     }
 }
+
+export function fetchEntryList() {
+    return dispatch => {
+        storage.getAll()
+            .then(items=>dispatch(updateEntryList(items)));
+    }
+}

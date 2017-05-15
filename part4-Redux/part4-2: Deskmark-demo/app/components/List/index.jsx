@@ -7,7 +7,7 @@ function List({
 	items,
 	onSelect
 }) {
-	const itemContents = items.map(
+	const itemsContent = items.map(
 		item => (
 			<ListItem 
 				item={item}
@@ -19,7 +19,7 @@ function List({
 
 	return (
 		<div className="list-component">
-			{itemContents}
+			{itemsContent}
 		</div>
 	)
 }
