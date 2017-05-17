@@ -5,15 +5,17 @@ var HtmlwebpackPlugin = require('html-webpack-plugin');
 var ROOT_PATH = path.resolve(__dirname);
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 var APP_PATH = path.resolve(ROOT_PATH, 'app');
-module.exports = {
+module.exports= {
   entry: {
-    app: path.resolve(APP_PATH, 'app.jsx')
+    app: path.resolve(APP_PATH, 'app.js')
   },
   output: {
     path: BUILD_PATH,
     filename: 'bundle.js'
   },
-
+  node: {
+    fs: "empty"
+  },
   //enable dev source map
   devtool: 'eval-source-map',
   //enable dev server
@@ -21,23 +23,30 @@ module.exports = {
     historyApiFallback: true,
     hot: true,
     inline: true,
-    progress: true,
-    port: 8888
+    progress: true
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
     root: APP_PATH
   },
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      loaders: ['babel'],
-      include: APP_PATH
-    }]
+    preLoaders: [
+      {
+        test: /\.jsx?$/,
+        loaders: ['eslint'],
+        include: APP_PATH
+      }
+    ],
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel'],
+        include: APP_PATH
+      }    ]
   },
   plugins: [
     new HtmlwebpackPlugin({
-      title: 'Profile app'
+      title: 'My first redux app'
     })
   ]
 }
