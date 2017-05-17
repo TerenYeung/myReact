@@ -9,7 +9,8 @@ import {
 import {
   bindActionCreators,
   createStore,
-  applyMiddleware
+  applyMiddleware,
+  compose,
 } from 'redux';
 import {
   connect,
@@ -23,9 +24,17 @@ import * as actionCreators from 'actions';
 import Deskmark from 'components/Deskmark';
 import 'bootstrap/scss/bootstrap.scss';
 
-const store = applyMiddleware(
-  thunkMiddleware
-)(createStore)(rootReducer);
+// const store = applyMiddleware(
+//   thunkMiddleware
+// )(createStore)(rootReducer);
+
+const store = createStore(
+  rootReducer,
+  compose(
+    applyMiddleware(thunkMiddleware),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
+)
 
 const App = connect(
   state => ({

@@ -7,6 +7,10 @@ import ItemShowLayer from 'components/ItemShowLayer';
 
 class Deskmark extends React.Component {
 
+  componentDidMount() {
+    this.props.actions.fetchEntryList();
+  }
+
   render() {
     const { state, actions } = this.props;
     const { isEditing, selectedId } = state.editor;
